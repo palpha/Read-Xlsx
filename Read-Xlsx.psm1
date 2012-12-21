@@ -1,8 +1,9 @@
 ﻿Set-StrictMode -Version 3
 
-[System.IO.Directory]::SetCurrentDirectory($PSScriptRoot)
+[System.Reflection.Assembly]::LoadFile("$PSScriptRoot\WindowsBase.dll")
 [System.Reflection.Assembly]::LoadFile("$PSScriptRoot\DocumentFormat.OpenXml.dll")
-[System.Reflection.Assembly]::LoadFile("$PSScriptRoot\Panagora.Office.dll")
+
+Add-Type -Path .\ExcelReader.cs -ReferencedAssemblies "$(pwd)\DocumentFormat.OpenXml.dll", "$(pwd)\WindowsBase.dll"
 
 function Is-Xslx {
     param ([System.IO.FileInfo] $File)
@@ -11,7 +12,7 @@ function Is-Xslx {
 
 function Create-Reader {
     param ([string] $FilePath)
-    New-Object Panagora.Office.ExcelReader($FilePath)
+    New-Object ExcelReader($FilePath)
 }
 
 function Read-Xlsx {
