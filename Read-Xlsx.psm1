@@ -3,7 +3,7 @@
 [System.Reflection.Assembly]::LoadFile("$PSScriptRoot\WindowsBase.dll")
 [System.Reflection.Assembly]::LoadFile("$PSScriptRoot\DocumentFormat.OpenXml.dll")
 
-Add-Type -Path .\ExcelReader.cs -ReferencedAssemblies "$(pwd)\DocumentFormat.OpenXml.dll", "$(pwd)\WindowsBase.dll"
+Add-Type -Path $PSScriptRoot\ExcelReader.cs -ReferencedAssemblies "$PSScriptRoot\DocumentFormat.OpenXml.dll", "$PSScriptRoot\WindowsBase.dll"
 
 function Is-Xslx {
     param ([System.IO.FileInfo] $File)
