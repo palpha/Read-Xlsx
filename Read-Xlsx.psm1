@@ -27,8 +27,22 @@ function Read-Xlsx {
         $Sheet = 0 # name or idx
     )
 
+    begin {
+        $FilePath = $FilePath | % {
+            if (-not [System.IO.Path]::IsPathRooted($_)) {
+                "$(pwd)\$_"
+            } else { $_ }
+        }
+    }
+
     process {
         $FilePath | ? { Is-Xslx $_ } | % {
+            if (-not (Test-Path $_.FullName)) {
+                Write-Error ("File not found: {0}" -f $_.FullName)
+                return
+            }
+
+            $reader = $false
             try {
                 $reader = Create-Reader $_.FullName
                 $colNames = @()
@@ -46,7 +60,7 @@ function Read-Xlsx {
                     }
                 } | ? { $_ -ne $null }
             } finally {
-                $reader.Dispose()
+                if ($reader) { $reader.Dispose() }
             }
         }
     }
