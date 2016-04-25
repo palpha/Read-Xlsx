@@ -24,4 +24,4 @@ Read-Xlsx will produce a PSCustomObject per row, with property names based on th
 
 Get-XlsxInfo will give you sheet and column names.
 
-Both functions accepts pipeline input (by value and by property name).
+Both functions accept pipeline input (by value and by property name).
